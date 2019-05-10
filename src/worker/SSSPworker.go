@@ -158,6 +158,10 @@ func (w *SSSPWorker) peval(args *pb.PEvalRequest, id int) {
 	calculateStart := time.Now()
 
 	startId := int64(1)
+	for temp := range w.g.GetNodes() {
+		startId = temp
+		break
+	}
 
 	isMessageToSend, messages, _, combineTime, iterationNum, updatePairNum, dstPartitionNum := algorithm.SSSP_PEVal(w.g, w.distance, startId, w.updatedMaster, w.updatedMirror)
 
