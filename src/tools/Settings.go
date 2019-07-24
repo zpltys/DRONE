@@ -1,17 +1,13 @@
 package tools
 
 const (
-	//ResultPath = "/home/acgict/result/"
-	ResultPath = "/data/xwen/"
+	ResultPath = "/slurm/zhangshuai/result/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
 	//NFSPath = "/data/xwen/webbase"
-	NFSPath = "/data/xwen/data"
-	//NFSPath = "../test_data/subgraph.json"
-	//PartitionPath = "../test_data/partition.json"
-	//NFSPath = "/home/acgict/inputgraph/"
+	NFSPath = "/mnt/nfs/zpltys/webbase_32/"
 
-	WorkerOnSC = true
+	WorkerOnSC = false
 
 	//ConfigPath = "../test_data/config.txt"
 	ConfigPath = "config.txt"

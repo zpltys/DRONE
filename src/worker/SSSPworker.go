@@ -157,7 +157,7 @@ func (w *SSSPWorker) peval(args *pb.PEvalRequest, id int) {
 	var SlicePeerSend []*pb.WorkerCommunicationSize
 	calculateStart := time.Now()
 
-	startId := int64(73723936)
+	startId := int64(0)
 
 	isMessageToSend, messages, _, combineTime, iterationNum, updatePairNum, dstPartitionNum := algorithm.SSSP_PEVal(w.g, w.distance, startId, w.updatedMaster, w.updatedMirror)
 
