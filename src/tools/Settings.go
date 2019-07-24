@@ -1,11 +1,11 @@
 package tools
 
 const (
-	ResultPath = "/mnt/sdb1/zhangshuai/webbase_cdbh_32/"
+	ResultPath = "/mnt/sdb1/zhangshuai/result/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
 	//NFSPath = "/data/xwen/webbase"
-	NFSPath = "/mnt/nfs/zpltys/webbase_32/"
+	NFSPath = "/mnt/sdb1/zhangshuai/webbase_hash_32/"
 
 
 	WorkerOnSC = false
