@@ -1,7 +1,7 @@
 package tools
 
 const (
-	ResultPath = "/slurm/zhangshuai/result/"
+	ResultPath = "/mnt/sdb1/zhangshuai/webbase_cdbh_32/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
 	//NFSPath = "/data/xwen/webbase"
