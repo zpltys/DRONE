@@ -5,7 +5,7 @@ const (
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
 	//NFSPath = "/data/xwen/webbase"
-	NFSPath = "/slurm/zhangshuai/twitter_hash_32_DRONE/"
+	NFSPath = "/slurm/zhangshuai/twitter_cdbh_32_DRONE/"
 
 
 	WorkerOnSC = false
