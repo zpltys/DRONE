@@ -379,6 +379,7 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 		graphIO, _ = os.Open(tools.NFSPath + strconv.Itoa(partitionNum) + "/G." + strconv.Itoa(w.selfId-1))
 	} else {
 		graphIO, _ = os.Open(tools.NFSPath + "G." + strconv.Itoa(w.selfId-1))
+		fmt.Printf("graph Path: %s\n", tools.NFSPath + "G." + strconv.Itoa(w.selfId-1))
 	}
 	defer graphIO.Close()
 
@@ -416,8 +417,6 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 
 func RunCCWorker(id, partitionNum int) {
 	w := newCCWorker(id, partitionNum)
-
-	fmt.Printf("vertex number:%d\n", len(w.g.GetNodes()))
 
 	log.Println(w.selfId)
 	log.Println(w.peers[w.selfId])
