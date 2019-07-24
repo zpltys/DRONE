@@ -7,6 +7,7 @@ const (
 	//NFSPath = "/data/xwen/webbase"
 	NFSPath = "/mnt/nfs/zpltys/webbase_32/"
 
+
 	WorkerOnSC = false
 
 	//ConfigPath = "../test_data/config.txt"
