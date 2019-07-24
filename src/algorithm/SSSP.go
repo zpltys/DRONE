@@ -86,18 +86,23 @@ func SSSP_PEVal(g graph.Graph, distance map[graph.ID]float64, exchangeMsg map[gr
 	itertationStartTime := time.Now()
 	nodes := g.GetNodes()
 	// if this partition doesn't include startID, just return
-	if _, ok := nodes[startID]; !ok {
+/*	if _, ok := nodes[startID]; !ok {
 		return false, make(map[int][]*Pair), 0, 0, 0, 0, 0
-	}
+	}*/
+
 	pq := make(PriorityQueue, 0)
 	route := g.GetRoute()
 	updated := make(map[updateMsg]bool)
 
-	startPair := &Pair{
-		NodeId:   startID,
-		Distance: 0,
+	for u := range nodes {
+		if u.IntVal() % 100 == startID.IntVal() {
+			startPair := &Pair{
+				NodeId:   u,
+				Distance: 0,
+			}
+			heap.Push(&pq, startPair)
+		}
 	}
-	heap.Push(&pq, startPair)
 
 	var iterationNum int64 = 0
 	// begin SSSP iteration

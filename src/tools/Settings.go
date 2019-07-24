@@ -3,15 +3,12 @@ package tools
 
 const (
 	//ResultPath = "/home/acgict/result/"
-	ResultPath = "/mnt/nfs/xwen/result/"
+	ResultPath = "/slurm/zhangshuai/result/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
-	NFSPath = "/mnt/nfs/zpltys/webbase_ec/"
+	NFSPath = "/slurm/zhangshuai/twitter_cdbh_32/"
 
 	WorkerNum = 32
-	//NFSPath = "../test_data/subgraph.json"
-	//PartitionPath = "../test_data/partition.json"
-	//NFSPath = "/home/acgict/inputgraph/"
 	WorkerOnSC = false
 
 	LoadFromJson = false
