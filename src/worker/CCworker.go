@@ -417,6 +417,8 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 func RunCCWorker(id, partitionNum int) {
 	w := newCCWorker(id, partitionNum)
 
+	fmt.Printf("vertex number:%d\n", len(w.g.GetNodes()))
+
 	log.Println(w.selfId)
 	log.Println(w.peers[w.selfId])
 	ln, err := net.Listen("tcp", ":"+strings.Split(w.peers[w.selfId], ":")[1])
