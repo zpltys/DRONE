@@ -57,6 +57,8 @@ type CCWorker struct {
 	updatedMirror     Set.Set
 	updatedByMessage  Set.Set
 
+	asyncUpdateWorkers map[int64]Set.Set
+
 	CCValue map[int64]int64
 
 	iterationNum int
@@ -345,6 +347,7 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 	w.grpcHandlers = make(map[int]*grpc.ClientConn)
 
 	w.CCValue = make(map[int64]int64)
+	w.asyncUpdateWorkers = make(map[int64]Set.Set)
 
 	w.sendTime = 0
 	w.calTime = 0
@@ -407,6 +410,10 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 	loadTime := time.Since(start)
 	fmt.Printf("loadGraph Time: %v", loadTime)
 	log.Printf("graph size:%v\n", len(w.g.GetNodes()))
+
+	for ma := range w.g.GetMasters() {
+		w.asyncUpdateWorkers[ma] = Set.NewSet()
+	}
 
 	if w.g == nil {
 		log.Println("can't load graph")

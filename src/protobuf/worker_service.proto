@@ -66,6 +66,7 @@ message sSSPMessageResponse {
 message simMessageRequest {
     repeated simMessageStruct pair = 1;
 	bool calculateStep = 2;
+	int32 fromId = 3;
 }
 message simMessageResponse {
 }
