@@ -309,7 +309,6 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 				}
 				messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
 				//w.asyncUpdateWorkers[id].Remove(workerId)
-				break
 			}
 		}
 		w.asyncUpdateWorkers[id] = Set.NewSet()
