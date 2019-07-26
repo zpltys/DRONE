@@ -22,18 +22,18 @@ import (
 )
 
 // rpc send has max size limit, so we spilt our transfer into many small block
-func Peer2PeerCCSend(client pb.WorkerClient, message []*pb.SimMessageStruct, id int, calculateStep bool)  {
+func Peer2PeerCCSend(client pb.WorkerClient, message []*pb.SimMessageStruct, id int, calculateStep bool, FromId int)  {
 	for len(message) > tools.RPCSendSize {
 		slice := message[0:tools.RPCSendSize]
 		message = message[tools.RPCSendSize:]
-		_, err := client.SimSend(context.Background(), &pb.SimMessageRequest{Pair: slice, CalculateStep:calculateStep})
+		_, err := client.SimSend(context.Background(), &pb.SimMessageRequest{Pair: slice, CalculateStep:calculateStep, FromId:int32(FromId)})
 		if err != nil {
 			log.Printf("send to %v error\n", id)
 			log.Fatal(err)
 		}
 	}
 	if len(message) != 0 {
-		_, err := client.SimSend(context.Background(), &pb.SimMessageRequest{Pair: message, CalculateStep:calculateStep})
+		_, err := client.SimSend(context.Background(), &pb.SimMessageRequest{Pair: message, CalculateStep:calculateStep, FromId:int32(FromId)})
 		if err != nil {
 			log.Printf("send to %v error\n", id)
 			log.Fatal(err)
@@ -136,7 +136,7 @@ func (w *CCWorker) CCMessageSend(messages map[int][]*algorithm.CCPair, calculate
 				for _, msg := range message {
 					encodeMessage = append(encodeMessage, &pb.SimMessageStruct{DataId:msg.NodeId, PatternId:msg.CCvalue})
 				}
-				Peer2PeerCCSend(client, encodeMessage, partitionId + 1, calculateStep)
+				Peer2PeerCCSend(client, encodeMessage, partitionId + 1, calculateStep, w.selfId - 1)
 			}(partitionId, message)
 
 		}
