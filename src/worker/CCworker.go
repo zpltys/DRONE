@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"Set"
 	"algorithm"
 	"bufio"
 	"fmt"
@@ -9,16 +10,16 @@ import (
 	"graph"
 	"io"
 	"log"
+	"math/rand"
 	"net"
 	"os"
 	pb "protobuf"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 	"tools"
-	"sort"
-	"Set"
 )
 
 // rpc send has max size limit, so we spilt our transfer into many small block
@@ -294,21 +295,23 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 				if _, ok := messageMap[partition]; !ok {
 					messageMap[partition] = make([]*algorithm.CCPair, 0)
 				}
-				//log.Printf("zs-log: master send: id:%v, cc:%v\n", id, w.CCValue[id])
 				messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
 			}
 			w.updatedMaster.Remove(id)
 		} else {
 			for workerId := range w.asyncUpdateWorkers[id] {
+				if rand.Float32() < 0.7 {
+					continue
+				}
 				partition := int(workerId)
 				if _, ok := messageMap[partition]; !ok {
 					messageMap[partition] = make([]*algorithm.CCPair, 0)
 				}
-				//log.Printf("zs-log: master send: id:%v, cc:%v\n", id, w.CCValue[id])
 				messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
+				w.asyncUpdateWorkers[id].Remove(workerId)
 			}
 		}
-		w.asyncUpdateWorkers[id] = Set.NewSet()
+		//w.asyncUpdateWorkers[id] = Set.NewSet()
 	}
 
 	calculateTime := time.Since(calculateStart).Seconds()
