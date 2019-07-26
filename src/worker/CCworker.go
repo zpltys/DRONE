@@ -10,7 +10,6 @@ import (
 	"graph"
 	"io"
 	"log"
-	"math/rand"
 	"net"
 	"os"
 	pb "protobuf"
@@ -300,18 +299,16 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 			w.updatedMaster.Remove(id)
 		} else {
 			for workerId := range w.asyncUpdateWorkers[id] {
-				if rand.Float32() < 0.7 {
-					continue
-				}
 				partition := int(workerId)
 				if _, ok := messageMap[partition]; !ok {
 					messageMap[partition] = make([]*algorithm.CCPair, 0)
 				}
 				messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
-				w.asyncUpdateWorkers[id].Remove(workerId)
+				//w.asyncUpdateWorkers[id].Remove(workerId)
+				break
 			}
 		}
-		//w.asyncUpdateWorkers[id] = Set.NewSet()
+		w.asyncUpdateWorkers[id] = Set.NewSet()
 	}
 
 	calculateTime := time.Since(calculateStart).Seconds()
