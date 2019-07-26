@@ -51,7 +51,7 @@ type CCWorker struct {
 
 	g           graph.Graph
 
-	updatedBuffer     []*algorithm.CCPair
+	updatedBuffer     map[int][]*algorithm.CCPair
 	exchangeBuffer    []*algorithm.CCPair
 	updatedMaster     Set.Set
 	updatedMirror     Set.Set
@@ -258,6 +258,7 @@ func (w *CCWorker) Assemble(ctx context.Context, args *pb.AssembleRequest) (*pb.
 
 	for id, cc := range w.CCValue {
 		writer.WriteString(strconv.FormatInt(id,10) + "\t" + strconv.FormatInt(cc, 10) + "\n")
+		fmt.Println(strconv.FormatInt(id,10) + "\t" + strconv.FormatInt(cc, 10))
 	}
 	writer.Flush()
 
@@ -266,32 +267,48 @@ func (w *CCWorker) Assemble(ctx context.Context, args *pb.AssembleRequest) (*pb.
 
 func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest) (*pb.ExchangeResponse, error) {
 	calculateStart := time.Now()
-	for _, pair := range w.updatedBuffer {
-		id := pair.NodeId
-		cc := pair.CCvalue
+	for workerID, messages := range w.updatedBuffer {
+		for _, pair := range messages {
+			id := pair.NodeId
+			cc := pair.CCvalue
 
-		if cc == w.CCValue[id] {
-			continue
-		}
+			if cc == w.CCValue[id] {
+				continue
+			}
 
-		if cc < w.CCValue[id] {
-			w.CCValue[id] = cc
-			w.updatedByMessage[id] = true
+			if cc < w.CCValue[id] {
+				w.CCValue[id] = cc
+				w.updatedByMessage[id] = true
+			}
+			w.updatedMaster[id] = true
+			w.asyncUpdateWorkers[id].Add(int64(workerID))
 		}
-		w.updatedMaster[id] = true
 	}
-	w.updatedBuffer = make([]*algorithm.CCPair, 0)
+	w.updatedBuffer = make(map[int][]*algorithm.CCPair)
 
 	master := w.g.GetMasters()
 	messageMap := make(map[int][]*algorithm.CCPair)
 	for id := range w.updatedMaster {
-		for _, partition := range master[id] {
-			if _, ok := messageMap[partition]; !ok {
-				messageMap[partition] = make([]*algorithm.CCPair, 0)
+		if w.asyncUpdateWorkers[id].Size() == len(master[id]) || w.asyncUpdateWorkers[id].Size() == 0 {
+			for _, partition := range master[id] {
+				if _, ok := messageMap[partition]; !ok {
+					messageMap[partition] = make([]*algorithm.CCPair, 0)
+				}
+				//log.Printf("zs-log: master send: id:%v, cc:%v\n", id, w.CCValue[id])
+				messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
 			}
-			//log.Printf("zs-log: master send: id:%v, cc:%v\n", id, w.CCValue[id])
-			messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
+			w.updatedMaster.Remove(id)
+		} else {
+			for workerId := range w.asyncUpdateWorkers[id] {
+				partition := int(workerId)
+				if _, ok := messageMap[partition]; !ok {
+					messageMap[partition] = make([]*algorithm.CCPair, 0)
+				}
+				//log.Printf("zs-log: master send: id:%v, cc:%v\n", id, w.CCValue[id])
+				messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
+			}
 		}
+		w.asyncUpdateWorkers[id] = Set.NewSet()
 	}
 
 	calculateTime := time.Since(calculateStart).Seconds()
@@ -299,7 +316,7 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 	messageStart := time.Now()
 	w.CCMessageSend(messageMap, false)
 	messageTime := time.Since(messageStart).Seconds()
-	w.updatedMaster = make(map[int64]bool)
+	//w.updatedMaster = make(map[int64]bool)
 
 
 	w.calTime += calculateTime
@@ -320,7 +337,7 @@ func (w *CCWorker) SimSend(ctx context.Context, args *pb.SimMessageRequest) (*pb
 
 	w.Lock()
 	if args.CalculateStep {
-		w.updatedBuffer = append(w.updatedBuffer, message...)
+		w.updatedBuffer[int(args.FromId)] = message
 	} else {
 		w.exchangeBuffer = append(w.exchangeBuffer, message...)
 	}
@@ -337,7 +354,7 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 	w.mutex = new(sync.Mutex)
 	w.selfId = id
 	w.peers = make([]string, 0)
-	w.updatedBuffer = make([]*algorithm.CCPair, 0)
+	w.updatedBuffer = make(map[int][]*algorithm.CCPair)
 	w.exchangeBuffer = make([]*algorithm.CCPair, 0)
 	w.updatedMaster = Set.NewSet()
 	w.updatedMirror = Set.NewSet()
