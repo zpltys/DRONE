@@ -288,8 +288,11 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 
 	master := w.g.GetMasters()
 	messageMap := make(map[int][]*algorithm.CCPair)
+
+	waitForSync := w.updatedMaster.Size()
+
 	for id := range w.updatedMaster {
-		if w.asyncUpdateWorkers[id].Size() == 0 {
+		if w.asyncUpdateWorkers[id].Size() == 0 || w.asyncUpdateWorkers[id].Size() == len(master[id]) || waitForSync < 100 {
 			for _, partition := range master[id] {
 				if _, ok := messageMap[partition]; !ok {
 					messageMap[partition] = make([]*algorithm.CCPair, 0)
