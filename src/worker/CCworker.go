@@ -259,6 +259,7 @@ func (w *CCWorker) Assemble(ctx context.Context, args *pb.AssembleRequest) (*pb.
 	for id, cc := range w.CCValue {
 		writer.WriteString(strconv.FormatInt(id,10) + "\t" + strconv.FormatInt(cc, 10) + "\n")
 		fmt.Println(strconv.FormatInt(id,10) + "\t" + strconv.FormatInt(cc, 10))
+		break
 	}
 	writer.Flush()
 
