@@ -5,7 +5,7 @@ const (
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
 	//NFSPath = "/data/xwen/webbase"
-	NFSPath = "/slurm/zhangshuai/friend_cdbh_32_DRONE/"
+	NFSPath = "/mnt/sdb1/zhangshuai/webbase_cdbh_32/"
 	//NFSPath = "../test_data/"
 
 
