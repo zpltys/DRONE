@@ -3,7 +3,7 @@ package tools
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
 
-	NFSPath = "/slurm/zhangshuai/webbase_hash_32_DRONE/"
+	NFSPath = "/mnt/sdb1/zhangshuai/webbase_cdbh_32/"
 
 
 	WorkerOnSC = false
