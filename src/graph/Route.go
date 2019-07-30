@@ -161,11 +161,13 @@ func LoadRouteMsgFromTxt(rd io.Reader, srcInner bool, g Graph)(map[ID]map[ID]Rou
 		weight := 1.0
 
 		var partition int
-		if srcInner {
+		/*if srcInner {
 			partition = int(dstId % tools.WorkerNum)
 		} else {
 			partition = int(srcId % tools.WorkerNum)
-		}
+		}*/
+
+		partition, err = strconv.Atoi(paras[2])
 		if err != nil {
 			log.Fatal("parse partition error")
 		}
