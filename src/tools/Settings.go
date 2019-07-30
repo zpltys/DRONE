@@ -2,10 +2,8 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	//ResultPath = "./"
-	//NFSPath = "/home/xwen/graph/16/"
-	//NFSPath = "/data/xwen/webbase"
-	NFSPath = "/slurm/zhangshuai/friend_cdbh_32_DRONE/"
+
+	NFSPath = "/slurm/zhangshuai/friend_hash_32_DRONE/"
 
 
 	WorkerOnSC = false
