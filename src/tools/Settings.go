@@ -6,9 +6,9 @@ const (
 	ResultPath = "/slurm/zhangshuai/result/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
-	NFSPath = "/slurm/zhangshuai/twitter_cdbh_32/"
+	NFSPath = "/slurm/zhangshuai/twitter_metis/"
 
-	WorkerNum = 32
+	//WorkerNum = 32
 	WorkerOnSC = false
 
 	LoadFromJson = false
