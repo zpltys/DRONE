@@ -2,18 +2,11 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	//ResultPath = "./"
-	//NFSPath = "/home/xwen/graph/16/"
-	//NFSPath = "/data/xwen/webbase"
-	//NFSPath = "/mnt/sdb1/zhangshuai/webbase_cdbh_32/"
-	NFSPath = "/slurm/zhangshuai/friend_cdbh_32_DRONE/"
+	NFSPath = "/mnt/sdb1/zhangshuai/webbase_cdbh_32/"
 	//NFSPath = "../test_data/"
-
-
 	WorkerOnSC = false
 
-	//ConfigPath = "../test_data/config2.txt"
-	ConfigPath = "config.txt"
+	ConfigPath = "config32.txt"
 	//PatternPath = "../test_data/pattern.txt"
 	PatternPath = "pattern.txt"
 	GraphSimulationTypeModel = 100
