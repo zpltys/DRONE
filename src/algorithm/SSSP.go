@@ -4,8 +4,6 @@ import (
 	"container/heap"
 	"graph"
 	"time"
-	//"fmt"
-	"log"
 )
 
 // for more information about this implement of priority queue,
