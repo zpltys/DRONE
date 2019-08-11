@@ -2,7 +2,7 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	NFSPath = "/slurm/zhangshuai/twitter_cdbh_32_DRONE/"
+	NFSPath = "/slurm/zhangshuai/friend_cdbh_32_DRONE/"
 	//NFSPath = "../test_data/"
 	WorkerOnSC = false
 
