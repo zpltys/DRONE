@@ -6,14 +6,14 @@ const (
 	ResultPath = "/slurm/zhangshuai/result/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
-	NFSPath = "/slurm/zhangshuai/twitter_metis/"
+	NFSPath = "/slurm/zhangshuai/lj_metis/"
 
-	//WorkerNum = 32
+	//WorkerNum = 12
 	WorkerOnSC = false
 
 	LoadFromJson = false
 
-	ConfigPath = "config32.txt"
+	ConfigPath = "config12.txt"
 	//ConfigPath = "../test_data/config.txt"
 
 	PatternPath = "pattern.txt"
