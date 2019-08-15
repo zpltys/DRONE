@@ -5,13 +5,13 @@ const (
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
 	//NFSPath = "/data/xwen/webbase"
-	NFSPath = "/slurm/zhangshuai/friend_cdbh_32_DRONE/"
+	NFSPath = "/mnt/nfs/zpltys/lj_vc_part12/"
 
 
 	WorkerOnSC = false
 
 	//ConfigPath = "../test_data/config.txt"
-	ConfigPath = "config.txt"
+	ConfigPath = "config12.txt"
 	//PatternPath = "../test_data/pattern.txt"
 	PatternPath = "pattern.txt"
 	GraphSimulationTypeModel = 100
