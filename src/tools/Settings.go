@@ -6,7 +6,7 @@ const (
 	ResultPath = "/slurm/zhangshuai/result/"
 	//ResultPath = "./"
 	//NFSPath = "/home/xwen/graph/16/"
-	NFSPath = "/slurm/zhangshuai/lj_metis/"
+	NFSPath = "/mnt/nfs/zpltys/usa_ec_part12/"
 
 	//WorkerNum = 12
 	WorkerOnSC = false
