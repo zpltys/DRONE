@@ -2,7 +2,7 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	NFSPath = "/mnt/nfs/zpltys/lj_vc_part12/"
+	NFSPath = "/mnt/nfs/zpltys/sssp_vc_part12/"
 	//NFSPath = "../test_data/"
 	WorkerOnSC = false
 
