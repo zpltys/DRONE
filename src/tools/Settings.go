@@ -2,11 +2,11 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	NFSPath = "/mnt/nfs/zpltys/lj_vc_part4/"
+	NFSPath = "/mnt/nfs/zpltys/lj_vc_part12/"
 	//NFSPath = "../test_data/"
 	WorkerOnSC = false
 
-	ConfigPath = "config4.txt"
+	ConfigPath = "config12.txt"
 	//PatternPath = "../test_data/pattern.txt"
 	PatternPath = "pattern.txt"
 	GraphSimulationTypeModel = 100
