@@ -1,9 +1,9 @@
 package worker
 
 import (
+	"Set"
 	"algorithm"
 	"bufio"
-	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"graph"
@@ -12,13 +12,12 @@ import (
 	"net"
 	"os"
 	pb "protobuf"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 	"tools"
-	"sort"
-	"Set"
 )
 
 // rpc send has max size limit, so we spilt our transfer into many small block
@@ -381,12 +380,12 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 		graphIO, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/G." + strconv.Itoa(w.selfId-1))
 	} else {
 		graphIO, _ = os.Open(tools.GetNFSPath() + "G." + strconv.Itoa(w.selfId-1))
-		fmt.Printf("graph Path: %s\n", tools.GetNFSPath() + "G." + strconv.Itoa(w.selfId-1))
+		log.Printf("graph Path: %s\n", tools.GetNFSPath() + "G." + strconv.Itoa(w.selfId-1))
 	}
 	defer graphIO.Close()
 
 	if graphIO == nil {
-		fmt.Println("graphIO is nil")
+		log.Println("graphIO is nil")
 	}
 	if tools.WorkerOnSC {
 		master, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/Master." + strconv.Itoa(w.selfId-1))
@@ -407,7 +406,7 @@ func newCCWorker(id, partitionNum int) *CCWorker {
 	}
 
 	loadTime := time.Since(start)
-	fmt.Printf("loadGraph Time: %v", loadTime)
+	log.Printf("loadGraph Time: %v", loadTime)
 	log.Printf("graph size:%v\n", len(w.g.GetNodes()))
 
 	if w.g == nil {
