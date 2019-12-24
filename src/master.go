@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"io"
@@ -9,6 +10,7 @@ import (
 	"net"
 	"os"
 	pb "protobuf"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -86,7 +88,6 @@ func (mr *Master) Register(ctx context.Context, args *pb.RegisterRequest) (r *pb
 	mr.workerConn[int(args.WorkerIndex)] = conn
 
 	if _, ok := mr.isWorkerRegistered[args.WorkerIndex]; ok {
-		//TODO: if the master terminate, how about worker's register?
 		log.Fatal("%d worker register more than one times", args.WorkerIndex)
 	} else {
 		mr.isWorkerRegistered[args.WorkerIndex] = true
@@ -125,8 +126,9 @@ func newMaster() (mr *Master) {
 	//mr.sendTime = make(map[int32]float64)
 	return mr
 }
-func (mr *Master) ReadConfig() {
-	f, err := os.Open(tools.ConfigPath)
+func (mr *Master) ReadConfig(partitionNum int) {
+	configPath := tools.GetConfigPath(partitionNum)
+	f, err := os.Open(configPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -367,9 +369,10 @@ func (mr *Master) ClearSuperStepMessgae() {
 	mr.finishMap = make(map[int32]bool)
 }
 
-func RunJob(jobName string) {
+func RunJob(jobName string, workerNum int) {
+	log.Println(jobName)
 	mr := newMaster()
-	mr.ReadConfig()
+	mr.ReadConfig(workerNum)
 	go mr.StartMasterServer()
 	<-mr.registerDone
 
@@ -413,7 +416,12 @@ func RunJob(jobName string) {
 }
 
 func main() {
-	jobName := "graph simulation"
+	fmt.Printf("%v-----\n", os.Args[0])
+	fmt.Printf("%v-----\n", os.Args[1])
+	fmt.Printf("%v-----\n", os.Args[2])
+	jobName := os.Args[1]
+	workerNum, _ := strconv.Atoi(os.Args[2])
+
 	//TODO:split the Json into worker's subJson
-	RunJob(jobName)
+	RunJob(jobName, workerNum)
 }

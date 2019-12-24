@@ -4,20 +4,24 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"tools"
 	"worker"
 	"log"
 )
 
 func main() {
 	log.Println("start")
-	log.Printf("%v-----\n", os.Args[0])
-	log.Printf("%v-----\n", os.Args[1])
-	log.Printf("%v-----\n", os.Args[2])
+	fmt.Printf("%v-----\n", os.Args[0])
+	fmt.Printf("%v-----\n", os.Args[1])  //workerID
+	fmt.Printf("%v-----\n", os.Args[2])  //partitionNum
+	fmt.Printf("%v-----\n", os.Args[3])  //graph
+	fmt.Printf("%v-----\n", os.Args[4])  //partitionstrategy
 	workerID, err := strconv.Atoi(os.Args[1])
 	PartitionNum, err := strconv.Atoi(os.Args[2])
 	if err != nil {
 		fmt.Println("conv fail!")
 	}
+	tools.SetGraph(os.Args[3], os.Args[4])
 	worker.RunSimWorker(workerID, PartitionNum)
 	fmt.Println("stop")
 }

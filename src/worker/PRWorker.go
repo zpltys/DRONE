@@ -316,7 +316,8 @@ func newPRWorker(id, partitionNum int) *PRWorker {
 	// in config file, every line in this format: id,ip:port\n
 	// while id means the id of this worker, and 0 means master
 	// the id of first line must be 0 (so the first ip:port is master)
-	f, err := os.Open(tools.ConfigPath)
+	configPath := tools.GetConfigPath(partitionNum)
+	f, err := os.Open(configPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -338,9 +339,9 @@ func newPRWorker(id, partitionNum int) *PRWorker {
 	var graphIO, master, mirror, isolated, targetsFile *os.File
 
 	if tools.WorkerOnSC {
-		graphIO, _ = os.Open(tools.NFSPath + strconv.Itoa(partitionNum) + "/G." + strconv.Itoa(w.selfId-1))
+		graphIO, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/G." + strconv.Itoa(w.selfId-1))
 	} else {
-		graphIO, _ = os.Open(tools.NFSPath + "G." + strconv.Itoa(w.selfId-1))
+		graphIO, _ = os.Open(tools.GetNFSPath() + "G." + strconv.Itoa(w.selfId-1))
 	}
 	defer graphIO.Close()
 
@@ -348,15 +349,15 @@ func newPRWorker(id, partitionNum int) *PRWorker {
 		fmt.Println("graph is nil")
 	}
 	if tools.WorkerOnSC {
-		master, _ = os.Open(tools.NFSPath + strconv.Itoa(partitionNum) + "/Master." + strconv.Itoa(w.selfId-1))
-		mirror, _ = os.Open(tools.NFSPath + strconv.Itoa(partitionNum) + "/Mirror." + strconv.Itoa(w.selfId-1))
-		isolated, _ = os.Open(tools.NFSPath + strconv.Itoa(partitionNum) + "/Isolateds." + strconv.Itoa(w.selfId-1))
-		targetsFile, _ = os.Open(tools.NFSPath + strconv.Itoa(partitionNum) + "/Degree." + strconv.Itoa(w.selfId-1))
+		master, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/Master." + strconv.Itoa(w.selfId-1))
+		mirror, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/Mirror." + strconv.Itoa(w.selfId-1))
+		isolated, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/Isolateds." + strconv.Itoa(w.selfId-1))
+		targetsFile, _ = os.Open(tools.GetNFSPath() + strconv.Itoa(partitionNum) + "/Degree." + strconv.Itoa(w.selfId-1))
 	} else {
-		master, _ = os.Open(tools.NFSPath + "Master." + strconv.Itoa(w.selfId-1))
-		mirror, _ = os.Open(tools.NFSPath + "Mirror." + strconv.Itoa(w.selfId-1))
-		isolated, _ = os.Open(tools.NFSPath + "Isolateds." + strconv.Itoa(w.selfId-1))
-		targetsFile, _ = os.Open(tools.NFSPath + "Degree." + strconv.Itoa(w.selfId-1))
+		master, _ = os.Open(tools.GetNFSPath() + "Master." + strconv.Itoa(w.selfId-1))
+		mirror, _ = os.Open(tools.GetNFSPath() + "Mirror." + strconv.Itoa(w.selfId-1))
+		isolated, _ = os.Open(tools.GetNFSPath() + "Isolateds." + strconv.Itoa(w.selfId-1))
+		targetsFile, _ = os.Open(tools.GetNFSPath() + "Degree." + strconv.Itoa(w.selfId-1))
 	}
 	defer master.Close()
 	defer mirror.Close()

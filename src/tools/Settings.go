@@ -2,12 +2,10 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	NFSPath = "/slurm/zhangshuai/lj_cvc/"
+	dataPath = "/slurm/zhangshuai/"
 
 	WorkerOnSC = false
 
-	//ConfigPath = "../test_data/config.txt"
-	ConfigPath = "config12.txt"
 	//PatternPath = "../test_data/pattern.txt"
 	PatternPath = "pattern.txt"
 	GraphSimulationTypeModel = 100
@@ -17,3 +15,22 @@ const (
 	ConnPoolSize = 16
 	MasterConnPoolSize = 1024
 )
+
+var graphName, partitionStrategy string
+
+func SetGraph(name string, strategy string) {
+	graphName = name
+	partitionStrategy = strategy
+}
+
+func GetConfigPath(partitionNum int) string {
+	if partitionNum == 12 {
+		return "config12.txt"
+	} else {
+		return "config32.txt"
+	}
+}
+
+func GetNFSPath() string {
+	return dataPath + graphName + "_" + partitionStrategy
+}
