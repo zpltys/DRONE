@@ -1,7 +1,5 @@
 package tools
 
-import "log"
-
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
 	dataPath = "/slurm/zhangshuai/"
@@ -34,6 +32,5 @@ func GetConfigPath(partitionNum int) string {
 }
 
 func GetNFSPath() string {
-	log.Printf("file path:%s\n", dataPath + graphName + "_" + partitionStrategy)
-	return dataPath + graphName + "_" + partitionStrategy
+	return dataPath + graphName + "_" + partitionStrategy + "/"
 }
