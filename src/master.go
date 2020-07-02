@@ -358,7 +358,7 @@ func RunJob(jobName string) {
 }
 
 func main() {
-	jobName := "graph simulation"
+	jobName := "cc"
 	//TODO:split the Json into worker's subJson
 	RunJob(jobName)
 }
