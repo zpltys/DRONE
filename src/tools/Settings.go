@@ -2,7 +2,7 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	dataPath = "/slurm/zhangshuai/"
+	dataPath = "/slurm/zhangshuai/lj_4/"
 
 	WorkerOnSC = false
 
@@ -16,21 +16,22 @@ const (
 	MasterConnPoolSize = 1024
 )
 
-var graphName, partitionStrategy string
+var partitionStrategy string
 
-func SetGraph(name string, strategy string) {
-	graphName = name
+func SetGraph(strategy string) {
 	partitionStrategy = strategy
 }
 
 func GetConfigPath(partitionNum int) string {
-	if partitionNum == 12 {
-		return "config12.txt"
-	} else {
-		return "config32.txt"
-	}
+	//if partitionNum == 12 {
+	//	return "config12.txt"
+	//} else {
+	//	return "config32.txt"
+	//}
+	return "config4.txt"
 }
 
 func GetNFSPath() string {
-	return dataPath + graphName + "_" + partitionStrategy + "/"
+	//return dataPath + graphName + "_" + partitionStrategy + "/"
+	return dataPath + partitionStrategy + "/"
 }
