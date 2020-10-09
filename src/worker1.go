@@ -21,6 +21,6 @@ func main() {
 		fmt.Println("conv fail!")
 	}
 	tools.SetGraph(os.Args[3], os.Args[4])
-	worker.RunWorker(workerID, PartitionNum)
+	worker.RunSSSPWorker(workerID, PartitionNum)
 	fmt.Println("stop")
 }

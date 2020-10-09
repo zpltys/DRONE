@@ -427,7 +427,7 @@ func newWorker(id, partitionNum int) *SSSPWorker {
 	return w
 }
 
-func RunWorker(id, partitionNum int) {
+func RunSSSPWorker(id, partitionNum int) {
 	w := newWorker(id, partitionNum)
 
 	log.Println(w.selfId)
