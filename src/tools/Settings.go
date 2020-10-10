@@ -27,13 +27,14 @@ func SetGraph(graph string, strategy string) {
 func GetConfigPath(partitionNum int) string {
 	if partitionNum == 12 {
 		return "config12.txt"
-	} else {
+	} else if partitionNum == 32 {
 		return "config32.txt"
+	} else if partitionNum == 4 {
+		return "config4.txt"
 	}
-	//return "config4.txt"
 }
 
 func GetNFSPath() string {
-	return dataPath + graphName + "_" + partitionStrategy + "/"
-	//return dataPath + partitionStrategy + "/"
+	//return dataPath + graphName + "_" + partitionStrategy + "/"
+	return "/slurm/zhangshuai/lj_4/" + partitionStrategy + "/"
 }
