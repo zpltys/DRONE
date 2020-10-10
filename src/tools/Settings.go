@@ -19,7 +19,7 @@ const (
 var partitionStrategy string
 var graphName string
 
-func SetGraph(strategy string, graph string) {
+func SetGraph(graph string, strategy string) {
 	partitionStrategy = strategy
 	graphName = graph
 }
