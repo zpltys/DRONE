@@ -342,10 +342,12 @@ func NewGraphFromTXT(G io.Reader, Master io.Reader, Mirror io.Reader, Isolated i
 
 		parseSrc, err := strconv.ParseInt(paras[0], 10, 64)
 		if err != nil {
+			log.Printf("%s\n", line)
 			log.Fatal("parse src node id error")
 		}
 		parseDst, err := strconv.ParseInt(paras[1], 10, 64)
 		if err != nil {
+			log.Printf("%s\n", line)
 			log.Fatal("parse dst node id error")
 		}
 

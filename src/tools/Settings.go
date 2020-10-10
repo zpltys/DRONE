@@ -29,12 +29,12 @@ func GetConfigPath(partitionNum int) string {
 		return "config12.txt"
 	} else if partitionNum == 32 {
 		return "config32.txt"
-	} else if partitionNum == 4 {
+	} else {
 		return "config4.txt"
 	}
 }
 
 func GetNFSPath() string {
-	//return dataPath + graphName + "_" + partitionStrategy + "/"
-	return "/slurm/zhangshuai/lj_4/" + partitionStrategy + "/"
+	return dataPath + graphName + "_" + partitionStrategy + "/"
+	//return "/slurm/zhangshuai/lj_4/" + partitionStrategy + "/"
 }
