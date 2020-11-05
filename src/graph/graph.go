@@ -340,6 +340,10 @@ func NewGraphFromTXT(G io.Reader, Master io.Reader, Mirror io.Reader, Isolated i
 		}
 		paras := strings.Split(strings.Split(line, "\n")[0], " ")
 
+		if len(paras) <= 1 {
+			continue
+		}
+
 		parseSrc, err := strconv.ParseInt(paras[0], 10, 64)
 		if err != nil {
 			log.Printf("%s\n", line)

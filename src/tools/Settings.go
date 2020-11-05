@@ -3,7 +3,8 @@ package tools
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
 	//dataPath = "/slurm/zhangshuai/lj_4/"
-	dataPath = "/slurm/zhangshuai/"
+	//dataPath = "/slurm/zhangshuai/"
+	dataPath = "test_data/"
 	WorkerOnSC = false
 
 	//PatternPath = "../test_data/pattern.txt"
@@ -25,6 +26,9 @@ func SetGraph(graph string, strategy string) {
 }
 
 func GetConfigPath(partitionNum int) string {
+	if partitionNum == 2 {
+		return dataPath + "config2.txt"
+	}
 	if partitionNum == 12 {
 		return "config12.txt"
 	} else if partitionNum == 32 {
@@ -35,6 +39,7 @@ func GetConfigPath(partitionNum int) string {
 }
 
 func GetNFSPath() string {
-	return dataPath + graphName + "_" + partitionStrategy + "/"
+	return dataPath
+	//return dataPath + graphName + "_" + partitionStrategy + "/"
 	//return "/slurm/zhangshuai/lj_4/" + partitionStrategy + "/"
 }
