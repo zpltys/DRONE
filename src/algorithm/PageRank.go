@@ -60,12 +60,10 @@ func PageRank_IncEval(g graph.Graph, prVal map[int64]float64, accVal map[int64]f
 
 	nextUpdated := Set.NewSet()
 
-	log.Printf("updated vertexnum:%v\n", updatedSet.Size())
 	var iterationNum int64 = 0
 	maxerr := 0.0
 
 	for u := range updatedSet {
-		log.Printf("u: %v, acc:%v, diff:%v\n", u, accVal[u], diffVal[u])
 		accVal[u] += diffVal[u]
 		delete(diffVal, u)
 	}
