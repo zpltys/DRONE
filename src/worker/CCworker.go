@@ -283,7 +283,7 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 	messageMap := make(map[int][]*algorithm.CCPair)
 	messageSize := 0
 	for id := range w.updatedMaster {
-		messageSize += len(master)
+		messageSize += len(master[id])
 		for _, partition := range master[id] {
 			if _, ok := messageMap[partition]; !ok {
 				messageMap[partition] = make([]*algorithm.CCPair, 0)
