@@ -281,15 +281,17 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 
 	master := w.g.GetMasters()
 	messageMap := make(map[int][]*algorithm.CCPair)
+	messageSize := 0
 	for id := range w.updatedMaster {
+		messageSize += len(master)
 		for _, partition := range master[id] {
 			if _, ok := messageMap[partition]; !ok {
 				messageMap[partition] = make([]*algorithm.CCPair, 0)
 			}
-			//log.Printf("zs-log: master send: id:%v, cc:%v\n", id, w.CCValue[id])
 			messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
 		}
 	}
+	log.Printf("Worker %v master message exchange %v\n", w.selfId, messageSize)
 
 	calculateTime := time.Since(calculateStart).Seconds()
 

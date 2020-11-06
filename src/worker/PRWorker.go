@@ -248,7 +248,6 @@ func (w *PRWorker) IncEval(ctx context.Context, args *pb.IncEvalRequest) (*pb.In
 
 func (w *PRWorker) Assemble(ctx context.Context, args *pb.AssembleRequest) (*pb.AssembleResponse, error) {
 	log.Println("start assemble")
-	return &pb.AssembleResponse{Ok: true}, nil
 	f, err:= os.Create(tools.ResultPath + "PRresult_" + strconv.Itoa(w.selfId - 1))
 	if err != nil {
 		log.Panic(err)
