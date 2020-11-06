@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"io"
@@ -416,9 +415,6 @@ func RunJob(jobName string, workerNum int) {
 }
 
 func main() {
-	fmt.Printf("%v-----\n", os.Args[0])
-	fmt.Printf("%v-----\n", os.Args[1])
-	fmt.Printf("%v-----\n", os.Args[2])
 	jobName := os.Args[1]
 	workerNum, _ := strconv.Atoi(os.Args[2])
 

@@ -4,7 +4,6 @@ import (
 	"Set"
 	"algorithm"
 	"bufio"
-	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"graph"
@@ -292,7 +291,7 @@ func (w *CCWorker) ExchangeMessage(ctx context.Context, args *pb.ExchangeRequest
 			messageMap[partition] = append(messageMap[partition], &algorithm.CCPair{NodeId: id, CCvalue: w.CCValue[id]})
 		}
 	}
-	fmt.Printf("Worker %v master message exchange %v\n", w.selfId, messageSize)
+	log.Printf("Worker %v master message exchange size: %v\n", w.selfId, messageSize)
 
 	calculateTime := time.Since(calculateStart).Seconds()
 
