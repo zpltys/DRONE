@@ -2,8 +2,8 @@ package tools
 
 const (
 	ResultPath = "/mnt/sdb1/zhangshuai/result/"
-	//dataPath = "/slurm/zhangshuai/lj_4/"
-	dataPath = "/slurm/zhangshuai/"
+	dataPath = "/slurm/zhangshuai/lj_4/"
+	//dataPath = "/slurm/zhangshuai/"
 	//dataPath = "../test_data/"
 	WorkerOnSC = false
 
@@ -39,6 +39,6 @@ func GetConfigPath(partitionNum int) string {
 }
 
 func GetNFSPath() string {
-	return dataPath + graphName + "_" + partitionStrategy + "/"
-	//return "/slurm/zhangshuai/lj_4/" + partitionStrategy + "/"
+	//return dataPath + graphName + "_" + partitionStrategy + "/"
+	return "/slurm/zhangshuai/lj_4/" + partitionStrategy + "/"
 }
